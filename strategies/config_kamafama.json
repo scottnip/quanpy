@@ -90,8 +90,8 @@
   },
   "telegram": {
     "enabled": true,
-    "token": "7466515899:AAEdg1tMIQ-ycdJfjIkyzCtEr5IJI9sjQxE",
-    "chat_id": "7809519320",
+    "token": "*",
+    "chat_id": "*",
     "keyboard": [
       [
         "/daily",
