@@ -64,11 +64,11 @@ class NASOSv4(IStrategy):
         # "0": 0.283,
         # "40": 0.086,
         # "99": 0.036,
-        "0": 10
+        "0": 0.03
     }
 
     # Stoploss:
-    stoploss = -0.15
+    stoploss = -0.05
 
     # SMAOffset
     base_nb_candles_buy = IntParameter(
@@ -261,6 +261,10 @@ class NASOSv4(IStrategy):
         dataframe['rsi_fast'] = ta.RSI(dataframe, timeperiod=4)
         dataframe['rsi_slow'] = ta.RSI(dataframe, timeperiod=20)
 
+        # 计算常用技术指标，如RSI、EMA等
+        dataframe['ema_5'] = ta.EMA(dataframe, timeperiod=5)
+        dataframe['ema_10'] = ta.EMA(dataframe, timeperiod=10)
+
         return dataframe
 
     def populate_indicators(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
@@ -320,6 +324,13 @@ class NASOSv4(IStrategy):
             ),
             ['buy', 'buy_tag']] = (1, 'ewolow')
 
+        dataframe.loc[
+            (
+                    (dataframe['rsi'] < 30) &
+                    (dataframe['ema_5'] > dataframe['ema_10'])
+            ),
+            ['buy', 'buy_tag']] = (1, 'ewa_up')
+
         if dont_buy_conditions:
             for condition in dont_buy_conditions:
                 dataframe.loc[condition, 'buy'] = 0
@@ -352,4 +363,11 @@ class NASOSv4(IStrategy):
                 'sell'
             ]=1
 
+        # 增加卖出条件，例如RSI高于70或盈利达到一定比例
+        dataframe.loc[
+            (
+                    (dataframe['rsi'] > 60) |
+                    (dataframe['close'] / dataframe['open'] >= 1.02)  # 盈利2%
+            ),
+            'sell'] = 1
         return dataframe
