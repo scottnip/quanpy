@@ -1,0 +1,59 @@
+{
+  "strategy_name": "RSI_BB_MACD_V2",
+  "params": {
+    "roi": {
+      "0": 0.184,
+      "416": 0.14,
+      "933": 0.073,
+      "1982": 0
+    },
+    "stoploss": {
+      "stoploss": -0.15
+    },
+    "trailing": {
+      "trailing_stop": true,
+      "trailing_stop_positive": 0.01,
+      "trailing_stop_positive_offset": 0.022,
+      "trailing_only_offset_is_reached": true
+    },
+    "max_open_trades": {
+      "max_open_trades": 5
+    },
+    "buy": {
+      "adx_long_max_1": 9.4,
+      "adx_long_max_2": 31.9,
+      "adx_long_min_1": 5.4,
+      "adx_long_min_2": 20.5,
+      "adx_short_max_1": 21.7,
+      "adx_short_max_2": 35.9,
+      "adx_short_min_1": 10.2,
+      "adx_short_min_2": 25.1,
+      "bb_tp_l": 19,
+      "bb_tp_s": 33,
+      "leverage_num": 3,
+      "rsi_tp_l": 22,
+      "rsi_tp_s": 13,
+      "volume_check": 15,
+      "volume_check_s": 40
+    },
+    "sell": {
+      "atr_long_mul": 4.9,
+      "atr_short_mul": 1.8,
+      "ema_period_l_exit": 195,
+      "ema_period_s_exit": 183,
+      "volume_check_exit": 20,
+      "volume_check_exit_s": 34
+    },
+    "protection": {
+      "max_allowed_drawdown": 0.28,
+      "max_drawdown_lookback": 2,
+      "max_drawdown_stop_duration": 5,
+      "max_drawdown_trade_limit": 1,
+      "stoploss_guard_lookback": 19,
+      "stoploss_guard_stop_duration": 3,
+      "stoploss_guard_trade_limit": 3
+    }
+  },
+  "ft_stratparam_v": 1,
+  "export_time": "2025-03-06 14:32:56.647700+00:00"
+}
