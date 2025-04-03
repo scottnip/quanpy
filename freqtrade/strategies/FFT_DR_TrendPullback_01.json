@@ -1,0 +1,55 @@
+{
+  "strategy_name": "FFT_DR_TrendPullback_01",
+  "params": {
+    "roi": {
+      "0": 1
+    },
+    "stoploss": {
+      "stoploss": -0.1
+    },
+    "trailing": {
+      "trailing_stop": false,
+      "trailing_stop_positive": null,
+      "trailing_stop_positive_offset": 0.0,
+      "trailing_only_offset_is_reached": false
+    },
+    "max_open_trades": {
+      "max_open_trades": 5
+    },
+    "buy": {
+      "leverage_num": 1,
+      "crossed_ema_window": 6,
+      "good_signal_close_ratio": 0.6,
+      "good_signal_entity_ratio": 0.5,
+      "higher_trend_num": 6,
+      "higher_trend_window": 10,
+      "long_pb_trend_higher_trend_window": 10,
+      "long_pb_trend_pullback_window": 5,
+      "long_pullback_window": 5,
+      "lower_trend_num": 6,
+      "lower_trend_window": 10,
+      "pullback_high_roll_window": 3,
+      "pullback_low_roll_window": 4,
+      "short_pb_trend_higher_trend_window": 9,
+      "short_pb_trend_pullback_window": 2,
+      "short_pullback_window": 3
+    },
+    "sell": {
+      "higher_trend_stoploss_ratio": 0.6,
+      "lower_trend_stoploss_ratio": 0.8,
+      "take_profit_long_factor": 1.6,
+      "take_profit_short_factor": 1.2
+    },
+    "protection": {
+      "max_allowed_drawdown": 0.1,
+      "max_drawdown_lookback": 2,
+      "max_drawdown_stop_duration": 4,
+      "max_drawdown_trade_limit": 1,
+      "stoploss_guard_lookback": 8,
+      "stoploss_guard_stop_duration": 4,
+      "stoploss_guard_trade_limit": 1
+    }
+  },
+  "ft_stratparam_v": 1,
+  "export_time": "2025-04-03 06:52:20.166962+00:00"
+}
