@@ -1,3 +1,17 @@
+"""
+TODO：
+1. swing_high/swing_low: 未来函数问题，需要修正。
+
+SMC
+* FVG策略
+https://www.xiaohongshu.com/explore/67e4d159000000001d025b21?app_platform=android&ignoreEngage=true&app_version=8.76.0&share_from_user_hidden=true&xsec_source=app_share&type=video&xsec_token=CBkX_D247Q-ZmwMzr1uKw6LvsTegjz2lqxU1xAZVFVEYY=&author_share=1&xhsshare=CopyLink&shareRedId=OD04ODRHPUo2NzUyOTgwNjc7OThJPTs_&apptime=1743910740&share_id=6358b6ff912f411287d18bf8a003e44c&share_channel=copy_link
+
+1. fvg是未经测试过的。
+2. 检测fvg内蜡烛的反应，要么在区域内收盘，要么朝着区域方向收盘。above_l_fvg
+3. fvg突破前方支撑。
+
+"""
+
 # pragma pylint: disable=missing-docstring, invalid-name, pointless-string-statement
 # flake8: noqa: F401
 # isort: skip_file
@@ -32,17 +46,7 @@ logger = logging.getLogger(__name__)
 
 # custom indicators
 # ##############################################################################################################################################################################################
-"""
 
-SMC
-* FVG策略
-https://www.xiaohongshu.com/explore/67e4d159000000001d025b21?app_platform=android&ignoreEngage=true&app_version=8.76.0&share_from_user_hidden=true&xsec_source=app_share&type=video&xsec_token=CBkX_D247Q-ZmwMzr1uKw6LvsTegjz2lqxU1xAZVFVEYY=&author_share=1&xhsshare=CopyLink&shareRedId=OD04ODRHPUo2NzUyOTgwNjc7OThJPTs_&apptime=1743910740&share_id=6358b6ff912f411287d18bf8a003e44c&share_channel=copy_link
-
-1. fvg是未经测试过的。
-2. 检测fvg内蜡烛的反应，要么在区域内收盘，要么朝着区域方向收盘。above_l_fvg
-3. fvg突破前方支撑。
-
-"""
 
 # ##############################################################################################################################################################################################
 
@@ -256,11 +260,12 @@ class SMC_FVG_Stra_01(IStrategy):
         dataframe['s_fvg_k_high'] = dataframe['s_fvg_k_high'].ffill()
 
         # 局部极值点
-        dataframe['swing_high'] = dataframe.iloc[argrelextrema(dataframe['high'].values, np.greater, order=self.swing_order.value)[0]]['high']
+        dataframe['prev_high'] = dataframe['high'].shift(self.swing_order.value)
+        dataframe['swing_high'] = dataframe.iloc[argrelextrema(dataframe['prev_high'].values, np.greater, order=self.swing_order.value)[0]]['prev_high']
         dataframe['swing_high'] = dataframe['swing_high'].ffill()
-        dataframe['swing_low'] = dataframe.iloc[argrelextrema(dataframe['low'].values, np.less, order=self.swing_order.value)[0]]['low']
+        dataframe['prev_low'] = dataframe['low'].shift(self.swing_order.value)
+        dataframe['swing_low'] = dataframe.iloc[argrelextrema(dataframe['prev_low'].values, np.less, order=self.swing_order.value)[0]]['prev_low']
         dataframe['swing_low'] = dataframe['swing_low'].ffill()
-
         ################### 定义高级指标 ##########################
 
         ###################  long fvg

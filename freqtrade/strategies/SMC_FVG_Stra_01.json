@@ -18,11 +18,11 @@
     },
     "buy": {
       "leverage_num": 1,
-      "above_l_fvg_window": 6,
-      "below_s_fvg_window": 5,
+      "above_l_fvg_window": 7,
+      "below_s_fvg_window": 11,
       "swing_order": 5,
-      "valid_l_fvg_window": 8,
-      "valid_s_fvg_window": 10
+      "valid_l_fvg_window": 12,
+      "valid_s_fvg_window": 15
     },
     "sell": {
       "take_profit_long_factor": 1.0,
@@ -39,5 +39,5 @@
     }
   },
   "ft_stratparam_v": 1,
-  "export_time": "2025-04-09 13:16:10.441091+00:00"
+  "export_time": "2025-04-11 12:07:40.845569+00:00"
 }
