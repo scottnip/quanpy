@@ -1,0 +1,51 @@
+{
+  "strategy_name": "FFT_TT_Wedge_03",
+  "params": {
+    "roi": {
+      "0": 1
+    },
+    "stoploss": {
+      "stoploss": -0.1
+    },
+    "trailing": {
+      "trailing_stop": false,
+      "trailing_stop_positive": null,
+      "trailing_stop_positive_offset": 0.0,
+      "trailing_only_offset_is_reached": false
+    },
+    "max_open_trades": {
+      "max_open_trades": 5
+    },
+    "buy": {
+      "leverage_num": 1,
+      "bear_pp2_window": 30,
+      "bear_pp3_window": 20,
+      "bear_push_pullback_window": 12,
+      "bear_push_window": 10,
+      "bull_pp2_window": 25,
+      "bull_pp3_window": 20,
+      "bull_push_pullback_window": 8,
+      "bull_push_window": 5,
+      "swing_order": 4,
+      "uni_trend_thd": 5,
+      "uni_trend_window": 8,
+      "wedge_bottom_1_window": 5,
+      "wedge_top_1_window": 10
+    },
+    "sell": {
+      "take_profit_long_factor": 3.0,
+      "take_profit_short_factor": 2.9
+    },
+    "protection": {
+      "max_allowed_drawdown": 0.1,
+      "max_drawdown_lookback": 2,
+      "max_drawdown_stop_duration": 4,
+      "max_drawdown_trade_limit": 1,
+      "stoploss_guard_lookback": 8,
+      "stoploss_guard_stop_duration": 4,
+      "stoploss_guard_trade_limit": 1
+    }
+  },
+  "ft_stratparam_v": 1,
+  "export_time": "2025-05-07 04:27:45.909260+00:00"
+}
