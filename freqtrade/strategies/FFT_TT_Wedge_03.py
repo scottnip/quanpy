@@ -39,13 +39,32 @@ TT: Test DR: DryRun LR: LiveRun
 * FFT_TT_Wedge_03
 
 基线：
-* FFT_TT_Wedge_01
+* FFT_TT_Wedge_03
 
 优化：
-* 识别三推楔形的时候，第三推不要求有回调。
+* 增加出场条件：如果出现相反趋势，则退出。
 
 结果：
-* 
+* 持仓时间变短。
+* 2022年变好很多。
+
+优化前：2024年
+┏━━━━━━━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┓
+┃                 ┃        ┃              ┃                 ┃              ┃                  ┃  Win  Draw  Loss ┃                  ┃
+┃        Strategy ┃ Trades ┃ Avg Profit % ┃ Tot Profit USDT ┃ Tot Profit % ┃     Avg Duration ┃             Win% ┃         Drawdown ┃
+┡━━━━━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━┩
+│ FFT_TT_Wedge_03 │    155 │         3.77 │        1660.120 │       166.01 │ 8 days, 12:33:00 │   50     0   105 │     205.011 USDT │
+│                 │        │              │                 │              │                  │             32.3 │           15.78% │
+└─────────────────┴────────┴──────────────┴─────────────────┴──────────────┴──────────────────┴──────────────────┴──────────────────┘
+优化后：2024年
+┏━━━━━━━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━┓
+┃                 ┃        ┃              ┃                 ┃              ┃                 ┃  Win  Draw  Loss ┃                   ┃
+┃        Strategy ┃ Trades ┃ Avg Profit % ┃ Tot Profit USDT ┃ Tot Profit % ┃    Avg Duration ┃             Win% ┃          Drawdown ┃
+┡━━━━━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━┩
+│ FFT_TT_Wedge_03 │    211 │         1.96 │        1175.132 │       117.51 │ 2 days, 2:04:00 │  102     0   109 │      174.019 USDT │
+│                 │        │              │                 │              │                 │             48.3 │            12.10% │
+└─────────────────┴────────┴──────────────┴─────────────────┴──────────────┴─────────────────┴──────────────────┴───────────────────┘
+
 """
 
 # ##############################################################################################################################################################################################
@@ -186,9 +205,9 @@ class FFT_TT_Wedge_03(IStrategy):
 
     # 止盈参数
     # 3.0
-    take_profit_long_factor = DecimalParameter(2.0, 3.0, default=2.0, decimals=1, space="sell", optimize=optimize_label)
+    take_profit_long_factor = DecimalParameter(1.0, 2.0, default=1.0, decimals=1, space="sell", optimize=optimize_label)
     # 2.9
-    take_profit_short_factor = DecimalParameter(2.0, 3.0, default=2.0, decimals=1, space="sell", optimize=optimize_label)
+    take_profit_short_factor = DecimalParameter(1.0, 2.0, default=1.0, decimals=1, space="sell", optimize=optimize_label)
 
     plot_config = {
         'main_plot': {
@@ -599,29 +618,29 @@ class FFT_TT_Wedge_03(IStrategy):
         dataframe.loc[:, 'exit_tag'] = ''
 
         # ##############################  exit long below ############################
-        # exit_long_1 = (
-        #     (dataframe['close'] > dataframe['ema_20'])
-        # )
-        #
-        # conditions_long.append(exit_long_1)
-        # dataframe.loc[exit_long_1, 'exit_tag'] += 'exit_long_ema'
-        #
-        # if conditions_long:
-        #     dataframe.loc[
-        #         reduce(lambda x, y: x | y, conditions_long),
-        #         'exit_long'] = 1
+        exit_long_1 = (
+            (dataframe['lower_trend'] == 1)
+        )
+
+        conditions_long.append(exit_long_1)
+        dataframe.loc[exit_long_1, 'exit_tag'] += 'exit_long_lower_trend'
+
+        if conditions_long:
+            dataframe.loc[
+                reduce(lambda x, y: x | y, conditions_long),
+                'exit_long'] = 1
 
         # ##############################  exit short below ############################
-        # exit_short_1 = (
-        #     (dataframe['close'] > dataframe['ema_20'])
-        # )
-        # conditions_short.append(exit_short_1)
-        # dataframe.loc[exit_short_1, 'exit_tag'] += 'exit_short_ema'
-        #
-        # if conditions_short:
-        #     dataframe.loc[
-        #         reduce(lambda x, y: x | y, conditions_short),
-        #         'exit_short'] = 1
+        exit_short_1 = (
+            (dataframe['higher_trend'] == 1)
+        )
+        conditions_short.append(exit_short_1)
+        dataframe.loc[exit_short_1, 'exit_tag'] += 'exit_short_higher_trend'
+
+        if conditions_short:
+            dataframe.loc[
+                reduce(lambda x, y: x | y, conditions_short),
+                'exit_short'] = 1
 
         return dataframe
 
@@ -696,6 +715,14 @@ class FFT_TT_Wedge_03(IStrategy):
                 stoploss_price = long_stoploss_price
                 stoploss_ratio= (stoploss_price / current_rate) - 1
                 return stoploss_ratio
+        #
+        # ## 动态止盈
+        # if current_profit >= 0.2:
+        #     return -0.01
+        # if current_profit >= 0.15:
+        #     return -0.05
+        # if current_profit >= 0.1:
+        #     return -0.05
 
         return self.stoploss
 

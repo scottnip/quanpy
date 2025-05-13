@@ -19,22 +19,22 @@
     "buy": {
       "leverage_num": 1,
       "bear_pp2_window": 30,
-      "bear_pp3_window": 20,
+      "bear_pp3_window": 25,
       "bear_push_pullback_window": 12,
-      "bear_push_window": 10,
-      "bull_pp2_window": 25,
+      "bear_push_window": 8,
+      "bull_pp2_window": 20,
       "bull_pp3_window": 20,
-      "bull_push_pullback_window": 8,
-      "bull_push_window": 5,
+      "bull_push_pullback_window": 12,
+      "bull_push_window": 9,
       "swing_order": 4,
       "uni_trend_thd": 5,
-      "uni_trend_window": 8,
-      "wedge_bottom_1_window": 5,
-      "wedge_top_1_window": 10
+      "uni_trend_window": 7,
+      "wedge_bottom_1_window": 10,
+      "wedge_top_1_window": 5
     },
     "sell": {
-      "take_profit_long_factor": 3.0,
-      "take_profit_short_factor": 2.9
+      "take_profit_long_factor": 1.1,
+      "take_profit_short_factor": 1.6
     },
     "protection": {
       "max_allowed_drawdown": 0.1,
@@ -47,5 +47,5 @@
     }
   },
   "ft_stratparam_v": 1,
-  "export_time": "2025-05-07 04:27:45.909260+00:00"
+  "export_time": "2025-05-13 07:57:11.761392+00:00"
 }
